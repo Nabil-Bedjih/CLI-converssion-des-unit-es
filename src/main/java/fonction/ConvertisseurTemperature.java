@@ -1,13 +1,34 @@
+package fonction;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConvertisseurTemperature {
-    public static double convertir(String uniteDepart, String uniteArrivee, double valeur) {
+    public static List<List<Double>> convertir(String uniteDepart, List<String> unitesArrivee, List<Double> valeurs) {
+        List<List<Double>> resultats = new ArrayList<>();
+
+        for (String uniteArrivee : unitesArrivee) {
+            List<Double> valeursConverties = new ArrayList<>();
+            for (Double valeur : valeurs) {
+                double resultat = convertirUneUnite(uniteDepart, uniteArrivee, valeur);
+                valeursConverties.add(resultat);
+            }
+            resultats.add(valeursConverties);
+        }
+
+        return resultats;
+    }
+
+    private static double convertirUneUnite(String uniteDepart, String uniteArrivee, double valeur) {
         if ("celsius".equals(uniteDepart.toLowerCase())) {
             return convertirDeCelsius(uniteArrivee, valeur);
         } else if ("fahrenheit".equals(uniteDepart.toLowerCase())) {
             return convertirDeFahrenheit(uniteArrivee, valeur);
         } else if ("kelvin".equals(uniteDepart.toLowerCase())) {
             return convertirDeKelvin(uniteArrivee, valeur);
+        } else {
+            throw new IllegalArgumentException("Unité de départ non supportée pour la conversion de température.");
         }
-        throw new IllegalArgumentException("Unité non supportée pour la conversion de température.");
     }
 
     private static double convertirDeCelsius(String uniteArrivee, double valeur) {
@@ -35,5 +56,22 @@ public class ConvertisseurTemperature {
             return (valeur - 273.15) * 9 / 5 + 32;
         }
         throw new IllegalArgumentException("Unité cible non supportée.");
+    }
+
+    public static void main(String[] args) {
+        String uniteDepart = "celsius";
+        List<String> unitesArrivee = new ArrayList<>();
+        unitesArrivee.add("fahrenheit");
+        unitesArrivee.add("kelvin");
+
+        List<Double> valeurs = new ArrayList<>();
+        valeurs.add(100.0);
+        valeurs.add(50.0);
+
+        List<List<Double>> resultats = convertir(uniteDepart, unitesArrivee, valeurs);
+
+
+        System.out.println(resultats);
+
     }
 }

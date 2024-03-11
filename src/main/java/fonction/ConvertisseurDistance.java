@@ -1,5 +1,28 @@
+package fonction;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ConvertisseurDistance {
-    public static double convertir(String uniteDepart, String uniteArrivee, double valeur) {
+    public static List<List<Double>> convertir(String uniteDepart, List<String> unitesArrivee, List<Double> valeurs) {
+        List<List<Double>> resultat = new ArrayList<>();
+
+        for (String uniteArrivee : unitesArrivee) {
+            List<Double> conversions = new ArrayList<>();
+            for (Double valeur : valeurs) {
+                double resultatConversion = convertirSingle(uniteDepart, uniteArrivee, valeur);
+                conversions.add(resultatConversion);
+            }
+            resultat.add(conversions);
+        }
+
+        return resultat;
+    }
+
+    private static double convertirSingle(String uniteDepart, String uniteArrivee, double valeur) {
+
 
         if ("mètres".equals(uniteDepart)) {
             if ("kilomètres".equals(uniteArrivee)) {
@@ -102,4 +125,26 @@ public class ConvertisseurDistance {
         }
         throw new IllegalArgumentException("Conversion non supportée");
     }
+
+    private static void afficherResultat(double valeur, String uniteArrivee, double resultat) {
+        System.out.println(resultat);
+    }
+
+    public static void main(String[] args) {
+        String uniteDepart = "mètres";
+        List<String> unitesArrivee = new ArrayList<>();
+        unitesArrivee.add("kilomètres");
+        unitesArrivee.add("centimètres");
+
+        List<Double> valeurs = new ArrayList<>();
+        valeurs.add(100.0);
+        valeurs.add(200.0);
+
+        List<List<Double>> resultat = convertir(uniteDepart, unitesArrivee, valeurs);
+
+
+        System.out.println(resultat);
+    }
 }
+
+
