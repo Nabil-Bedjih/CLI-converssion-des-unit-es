@@ -1,7 +1,6 @@
 package fr.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import picocli.CommandLine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,7 +59,7 @@ public class ApiConnector {
 
     public static void main(String[] args) {
         ApiConnector apiConnector = new ApiConnector();
-        ApiResponse apiResponse = apiConnector.getcuurencyFromApi("EUR");
+        ApiResponse apiResponse = apiConnector.getcuurencyFromApi("DZD");
 
         if (apiResponse != null) {
             System.out.println(apiResponse.getResult().getConversion().get(1).getRate());

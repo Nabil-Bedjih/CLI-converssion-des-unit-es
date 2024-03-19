@@ -1,3 +1,5 @@
+package fonction;
+
 public class ConvertisseurTemperature {
     public static double convertir(String uniteDepart, String uniteArrivee, double valeur) {
         if ("celsius".equals(uniteDepart.toLowerCase())) {
