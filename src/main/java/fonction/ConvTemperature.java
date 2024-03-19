@@ -3,7 +3,7 @@ package fonction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConvertisseurTemperature {
+public class ConvTemperature {
     public static List<List<Double>> convertir(String uniteDepart, List<String> unitesArrivee, List<Double> valeurs) {
         List<List<Double>> resultats = new ArrayList<>();
 
