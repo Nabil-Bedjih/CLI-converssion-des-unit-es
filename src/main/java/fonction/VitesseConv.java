@@ -58,5 +58,20 @@ public class VitesseConv {
         throw new IllegalArgumentException("Conversion non supportée");
     }
 
+    public static void main(String[] args) {
+        String unitFrom = "m/s";
+        List<String> unitsTo = new ArrayList<>();
+        unitsTo.add("km/h");
+        unitsTo.add("mph");
 
+        List<Double> values = new ArrayList<>();
+        values.add(10.0);
+        values.add(20.0);
+
+        List<List<Double>> result = convert(unitFrom, unitsTo, values);
+
+
+        System.out.println(result);
+
+    }
 }

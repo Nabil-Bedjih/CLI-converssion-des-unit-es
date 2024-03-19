@@ -58,5 +58,20 @@ public class ConvTemperature {
         throw new IllegalArgumentException("Unité cible non supportée.");
     }
 
+    public static void main(String[] args) {
+        String uniteDepart = "celsius";
+        List<String> unitesArrivee = new ArrayList<>();
+        unitesArrivee.add("fahrenheit");
+        unitesArrivee.add("kelvin");
 
+        List<Double> valeurs = new ArrayList<>();
+        valeurs.add(100.0);
+        valeurs.add(50.0);
+
+        List<List<Double>> resultats = convertir(uniteDepart, unitesArrivee, valeurs);
+
+
+        System.out.println(resultats);
+
+    }
 }
