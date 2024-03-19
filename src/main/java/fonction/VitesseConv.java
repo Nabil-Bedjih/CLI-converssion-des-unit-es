@@ -20,7 +20,7 @@ public class VitesseConv {
         return result;
     }
 
-    private static double convertSingle(String unitFrom, String unitTo, double value) {
+    public static double convertSingle(String unitFrom, String unitTo, double value) {
         if ("m/s".equals(unitFrom)) {
             if ("km/h".equals(unitTo)) {
                 return value * 3.6;
