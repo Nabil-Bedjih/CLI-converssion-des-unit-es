@@ -130,21 +130,7 @@ public class ConvertisseurDistance {
         System.out.println(resultat);
     }
 
-    public static void main(String[] args) {
-        String uniteDepart = "mètres";
-        List<String> unitesArrivee = new ArrayList<>();
-        unitesArrivee.add("kilomètres");
-        unitesArrivee.add("centimètres");
 
-        List<Double> valeurs = new ArrayList<>();
-        valeurs.add(100.0);
-        valeurs.add(200.0);
-
-        List<List<Double>> resultat = convertir(uniteDepart, unitesArrivee, valeurs);
-
-
-        System.out.println(resultat);
-    }
 }
 
 
