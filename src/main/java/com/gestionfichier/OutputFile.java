@@ -3,6 +3,9 @@ package com.gestionfichier;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class OutputFile {
@@ -73,4 +76,5 @@ public class OutputFile {
             System.out.println("An error occurred while creating the file: " + e.getMessage());
         }
     }
+
 }

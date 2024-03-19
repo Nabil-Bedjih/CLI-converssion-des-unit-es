@@ -3,18 +3,21 @@ package com.gestionfichier;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InputFile {
 
-    public static List<Double> getValueFromFilename(String filename) throws Exception {
-        if (filename == null || filename.isEmpty()) {
-            throw new Exception("Filename cannot be empty.");
+    public static List<Double> getValueFromURL(String fileURL) throws Exception {
+        if (fileURL == null || fileURL.isEmpty()) {
+            throw new Exception("File URL cannot be empty.");
         }
+
         List<Double> valuesList = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(fileURL).openStream()))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.isEmpty()) {
@@ -28,7 +31,7 @@ public class InputFile {
             }
             return valuesList;
         } catch (IOException e) {
-            throw new Exception("An error occurred while reading the file: " + e.getMessage());
+            throw new Exception("An error occurred while reading the file from URL: " + e.getMessage());
         }
     }
 

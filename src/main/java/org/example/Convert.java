@@ -1,7 +1,8 @@
 package org.example;
 
+import com.gestionfichier.InputFile;
+import com.gestionfichier.OutputFile;
 import fonction.ConvertisseurDistance;
-import fonction.ConvertisseurTemperature;
 import fonction.VitesseConv;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -46,26 +47,27 @@ public class Convert implements Runnable{
         if (dunit != null){
             if (value != null){
             } else if (inputFile != null) {
-                ArrayList<Double> listevaleur = lireFichier(String.valueOf(getClass().getResource("/test.txt")));
-                List<List<Double>> resultat = new ArrayList<>();
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list = InputFile.getValueFromURL(String.valueOf(getClass().getResource("/test.txt")));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
 
-                resultat = ConvertisseurDistance.convertir(dunit,parseArg(listOfUnit), listevaleur);
-                for (List<Double> liste : resultat) {
-                    for (Double valeur : liste) {
-                        System.out.print(valeur + " ");
-                    }
-                    System.out.println(); // Aller à la ligne après chaque liste
+                    values = ConvertisseurDistance.convertir(dunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
 
             }
         }
 
         if (tunit != null && (value != null || inputFile != null)){
-            System.out.println(value+" "+tunit +" = "+ ConvertisseurTemperature.convertir(tunit,listOfUnit, Double.parseDouble(value))+" "+listOfUnit);
+            //System.out.println(value+" "+tunit +" = "+ ConvertisseurTemperature.convertir(tunit,listOfUnit, Double.parseDouble(value))+" "+listOfUnit);
         }
 
         if (vunit != null && (value != null || inputFile != null)){
-            System.out.println(value+" "+vunit +" = "+ VitesseConv.convert(vunit,listOfUnit, Double.parseDouble(value))+" "+listOfUnit);
+            //System.out.println(value+" "+vunit +" = "+ VitesseConv.convert(vunit,listOfUnit, Double.parseDouble(value))+" "+listOfUnit);
         }
 
 
