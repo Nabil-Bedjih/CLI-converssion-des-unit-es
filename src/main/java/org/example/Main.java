@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-         new CommandLine(new Convert()).execute("-du=kilomètres","-ou=mètres,millimètres,miles","-f=test.txt");
+         new CommandLine(new Convert()).execute("-vu=m/s","-ou=km/h,noeuds,mph","-f=test.txt");
     }
     public static List<String> parseArg(String value) {
         return List.of(value.split(","));

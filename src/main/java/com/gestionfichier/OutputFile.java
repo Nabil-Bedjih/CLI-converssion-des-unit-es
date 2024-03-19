@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.List;
 
 public class OutputFile {
-
     public static void writeValuesToCSV(String filename, List<List<Double>> values) throws Exception {
         if (filename == null || filename.isEmpty()) {
             throw new Exception("Filename cannot be empty.");

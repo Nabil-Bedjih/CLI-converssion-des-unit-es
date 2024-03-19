@@ -2,6 +2,7 @@ package org.example;
 
 import com.gestionfichier.InputFile;
 import com.gestionfichier.OutputFile;
+import fonction.ConvTemperature;
 import fonction.ConvertisseurDistance;
 import fonction.VitesseConv;
 import picocli.CommandLine;
@@ -62,12 +63,39 @@ public class Convert implements Runnable{
             }
         }
 
-        if (tunit != null && (value != null || inputFile != null)){
-            //System.out.println(value+" "+tunit +" = "+ ConvertisseurTemperature.convertir(tunit,listOfUnit, Double.parseDouble(value))+" "+listOfUnit);
-        }
+        if (tunit != null){
+            if (value != null){
+            } else if (inputFile != null) {
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list = InputFile.getValueFromURL(String.valueOf(getClass().getResource("/test.txt")));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
 
-        if (vunit != null && (value != null || inputFile != null)){
-            //System.out.println(value+" "+vunit +" = "+ VitesseConv.convert(vunit,listOfUnit, Double.parseDouble(value))+" "+listOfUnit);
+                    values = ConvTemperature.convertir(tunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+        if (vunit != null){
+            if (value != null){
+            } else if (inputFile != null) {
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list = InputFile.getValueFromURL(String.valueOf(getClass().getResource("/test.txt")));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
+
+                    values = VitesseConv.convert(vunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
         }
 
 
