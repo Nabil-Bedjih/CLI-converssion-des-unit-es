@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConvTemperature {
+    //conversion
     public static List<List<Double>> convertir(String uniteDepart, List<String> unitesArrivee, List<Double> valeurs) {
         List<List<Double>> resultats = new ArrayList<>();
 
