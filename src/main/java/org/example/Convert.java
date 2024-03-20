@@ -111,32 +111,17 @@ public class Convert implements Runnable{
 
                     values = ConvDevise.convertirDevise(cunit,Main.parseArg(listOfUnit),list);
                     OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+cunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
 
             }
         }
-
-
-
-/*
-        if (tunit == null && value == null){
-            System.out.printf("temperature unit indefined");
-        }else{
-            System.out.println("temperature unit :  "+ dunit);
-            ConvertisseurTemperature.convertir(tunit,listOfUnit, Double.parseDouble(value));
-        }
-
-        if (listOfUnit == null ) {
-            System.out.printf("No output units specified");
-        } else {
-            String[] listOfOutUnit = parseArg(listOfUnit);
-            System.out.println("Output units:");
-            for (String unit : listOfOutUnit ) {
-                System.out.println(unit);
-            }
-        }
-        */
     }
 }
