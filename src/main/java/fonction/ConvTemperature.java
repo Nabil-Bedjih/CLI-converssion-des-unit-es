@@ -16,10 +16,8 @@ public class ConvTemperature {
             }
             resultats.add(valeursConverties);
         }
-
         return resultats;
     }
-
     private static double convertirUneUnite(String uniteDepart, String uniteArrivee, double valeur) {
         if ("celsius".equals(uniteDepart.toLowerCase())) {
             return convertirDeCelsius(uniteArrivee, valeur);
@@ -31,7 +29,6 @@ public class ConvTemperature {
             throw new IllegalArgumentException("Unité de départ non supportée pour la conversion de température.");
         }
     }
-
     private static double convertirDeCelsius(String uniteArrivee, double valeur) {
         if ("fahrenheit".equals(uniteArrivee.toLowerCase())) {
             return (valeur * 9 / 5) + 32;
@@ -40,7 +37,6 @@ public class ConvTemperature {
         }
         throw new IllegalArgumentException("Unité cible non supportée.");
     }
-
     private static double convertirDeFahrenheit(String uniteArrivee, double valeur) {
         if ("celsius".equals(uniteArrivee.toLowerCase())) {
             return (valeur - 32) * 5 / 9;
@@ -49,7 +45,6 @@ public class ConvTemperature {
         }
         throw new IllegalArgumentException("Unité cible non supportée.");
     }
-
     private static double convertirDeKelvin(String uniteArrivee, double valeur) {
         if ("celsius".equals(uniteArrivee.toLowerCase())) {
             return valeur - 273.15;
@@ -57,22 +52,5 @@ public class ConvTemperature {
             return (valeur - 273.15) * 9 / 5 + 32;
         }
         throw new IllegalArgumentException("Unité cible non supportée.");
-    }
-
-    public static void main(String[] args) {
-        String uniteDepart = "celsius";
-        List<String> unitesArrivee = new ArrayList<>();
-        unitesArrivee.add("fahrenheit");
-        unitesArrivee.add("kelvin");
-
-        List<Double> valeurs = new ArrayList<>();
-        valeurs.add(100.0);
-        valeurs.add(50.0);
-
-        List<List<Double>> resultats = convertir(uniteDepart, unitesArrivee, valeurs);
-
-
-        System.out.println(resultats);
-
     }
 }

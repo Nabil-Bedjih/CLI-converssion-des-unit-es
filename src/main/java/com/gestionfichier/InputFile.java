@@ -1,7 +1,6 @@
 package com.gestionfichier;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -14,9 +13,7 @@ public class InputFile {
         if (fileURL == null || fileURL.isEmpty()) {
             throw new Exception("File URL cannot be empty.");
         }
-
         List<Double> valuesList = new ArrayList<>();
-
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(fileURL).openStream()))) {
             String line;
             while ((line = br.readLine()) != null) {

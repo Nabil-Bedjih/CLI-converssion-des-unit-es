@@ -1,18 +1,15 @@
 package fonction;
 
-import fr.api.ApiConnector;
-import fr.api.ApiResponse;
-import fr.api.Conversion;
-import fr.api.Result;
+import fr.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConvDevise {
 
-    public static List<List<Double>> convertirDevise(String deviseOrigine, List<String> devisesDestinations, List<Double> valeurs) {
+    public static List<List<Double>> convertirDevise(String deviseOrigine, List<String> devisesDestinations, List<Double> valeurs) throws ApiException {
         ApiConnector apiConnector = new ApiConnector();
-        ApiResponse apiResponse = apiConnector.getcuurencyFromApi(deviseOrigine);
+        ApiResponse apiResponse = apiConnector.getCurrencyFromApi(deviseOrigine);
 
         List<List<Double>> resultats = new ArrayList<>();
 

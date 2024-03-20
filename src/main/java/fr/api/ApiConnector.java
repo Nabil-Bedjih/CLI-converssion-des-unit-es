@@ -1,7 +1,6 @@
 package fr.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,10 +13,10 @@ public class ApiConnector {
     ConfigReader configReader = new ConfigReader();
     String KEY;
 
-    public ApiResponse getcuurencyFromApi(String cur) {
+    public ApiResponse getCurrencyFromApi(String cur) throws ApiException {
         try {
             KEY = configReader.readConfigFile(getClass().getResource("/config.txt"));
-            String urlString = "https://api.devises.zone/v1/full/" + cur + "/json?key=" + KEY;
+            String urlString = "https://api.devises.zone/v1/full/" + cur.toUpperCase() + "/json?key=" + KEY;
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -25,56 +24,56 @@ public class ApiConnector {
             connection.setReadTimeout(5000);
 
             int status = connection.getResponseCode();
+            System.out.println(status);
+
+            if (status == 404) {
+                throw new CurrencyNotFoundException("La devise n'a pas été trouvée. Veuillez vérifier la saisie.");
+            } else if (status != 200) {
+                throw new ApiException("Erreur lors de la récupération des données depuis l'API. Code d'état : " );
+            }
 
             BufferedReader reader;
             String line;
             StringBuffer responseContent = new StringBuffer();
 
-            ApiResponse apiResponse = null;
-            if (status > 299) {
-                reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-                while ((line = reader.readLine()) != null) {
-                    responseContent.append(line);
-                }
-                reader.close();
-                throw new IOException("Erreur lors de la requête à l'API : " + responseContent.toString());
-            } else {
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                while ((line = reader.readLine()) != null) {
-                    responseContent.append(line);
-                }
-                reader.close();
-
-                ObjectMapper objectMapper = new ObjectMapper();
-                apiResponse = objectMapper.readValue(responseContent.toString(), ApiResponse.class);
-
-                System.out.println("Status: " + apiResponse.getStatus());
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            while ((line = reader.readLine()) != null) {
+                responseContent.append(line);
             }
+            reader.close();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            ApiResponse apiResponse = objectMapper.readValue(responseContent.toString(), ApiResponse.class);
+
+            System.out.println("Status: " + apiResponse.getStatus());
 
             connection.disconnect();
             return apiResponse;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            throw new ApiException("Une erreur s'est produite lors de la communication avec l'API.");
+        } catch (CurrencyNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static List<Double> getRatesForElements(ApiResponse apiResponse, String[] tab) {
         List<Double> ratesList = new ArrayList<>();
-        for (String element : tab) {
-            for (fr.api.Conversion conversion : apiResponse.getResult().getConversion()) {
-                if (conversion.getTo().equals(element)) {
-                    ratesList.add(conversion.getRate());
+        if (apiResponse != null && apiResponse.getResult() != null && apiResponse.getResult().getConversion() != null) {
+            for (String element : tab) {
+                for (fr.api.Conversion conversion : apiResponse.getResult().getConversion()) {
+                    if (conversion.getTo().equals(element)) {
+                        ratesList.add(conversion.getRate());
+                    }
                 }
             }
         }
-
         return ratesList;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ApiException {
         ApiConnector apiConnector = new ApiConnector();
-        ApiResponse apiResponse = apiConnector.getcuurencyFromApi("DZD");
+        ApiResponse apiResponse = apiConnector.getCurrencyFromApi("DZD");
 
         String[] tab = {"USD", "EUR", "BGN"};
         List<Double> ratesList = getRatesForElements(apiResponse, tab);
@@ -82,12 +81,9 @@ public class ApiConnector {
             System.out.println("Rate : " + rate);
         }
 
-        if (apiResponse != null) {
+        if (apiResponse != null && apiResponse.getResult() != null && !apiResponse.getResult().getConversion().isEmpty()) {
             System.out.println(apiResponse.getResult().getConversion().get(1).getRate());
-        } else {
-            System.out.println("Erreur lors de la récupération des données depuis l'API.");
         }
     }
-
-
 }
+

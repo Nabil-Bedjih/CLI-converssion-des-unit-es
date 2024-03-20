@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 public class ConfigReader {
-
     public String readConfigFile(URL url) {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {

@@ -8,14 +8,9 @@ import fonction.ConvertisseurDistance;
 import fonction.VitesseConv;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import static org.example.Main.lireFichier;
-import static org.example.Main.parseArg;
 
 
 @Command(name = "convert", mixinStandardHelpOptions = true, version = "convert 1.0",
@@ -49,6 +44,26 @@ public class Convert implements Runnable{
     public void run() {
         if (dunit != null){
             if (value != null){
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list.add(Double.valueOf(value));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
+
+                    values = ConvertisseurDistance.convertir(dunit,Main.parseArg(listOfUnit),list);
+
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+dunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
             } else if (inputFile != null) {
                 try {
                     List<List<Double>> values = new ArrayList<>();
@@ -58,6 +73,12 @@ public class Convert implements Runnable{
 
                     values = ConvertisseurDistance.convertir(dunit,Main.parseArg(listOfUnit),list);
                     OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+dunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -67,6 +88,24 @@ public class Convert implements Runnable{
 
         if (tunit != null){
             if (value != null){
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list.add(Double.valueOf(value));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
+
+                    values = ConvTemperature.convertir(tunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+tunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
             } else if (inputFile != null) {
                 try {
                     List<List<Double>> values = new ArrayList<>();
@@ -76,6 +115,12 @@ public class Convert implements Runnable{
 
                     values = ConvTemperature.convertir(tunit,Main.parseArg(listOfUnit),list);
                     OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+tunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -84,6 +129,24 @@ public class Convert implements Runnable{
         }
         if (vunit != null){
             if (value != null){
+
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list.add(Double.valueOf(value));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
+
+                    values = VitesseConv.convert(vunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+vunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             } else if (inputFile != null) {
                 try {
                     List<List<Double>> values = new ArrayList<>();
@@ -93,6 +156,12 @@ public class Convert implements Runnable{
 
                     values = VitesseConv.convert(vunit,Main.parseArg(listOfUnit),list);
                     OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+vunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -102,6 +171,23 @@ public class Convert implements Runnable{
 
         if (cunit != null){
             if (value != null){
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list.add(Double.valueOf(value));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
+
+                    values = ConvDevise.convertirDevise(cunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+
+                    System.out.println();
+                    System.out.println("conversion of  "+list.toString()+" "+cunit + " to "+ listOfUnit.toString());
+                    System.out.println();
+
+                    CSVReader.readAndDisplayCSV("outputfile.csv");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             } else if (inputFile != null) {
                 try {
                     List<List<Double>> values = new ArrayList<>();
