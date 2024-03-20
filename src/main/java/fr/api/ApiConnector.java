@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiConnector {
     ConfigReader configReader = new ConfigReader();
@@ -57,9 +59,28 @@ public class ApiConnector {
         }
     }
 
+    public static List<Double> getRatesForElements(ApiResponse apiResponse, String[] tab) {
+        List<Double> ratesList = new ArrayList<>();
+        for (String element : tab) {
+            for (fr.api.Conversion conversion : apiResponse.getResult().getConversion()) {
+                if (conversion.getTo().equals(element)) {
+                    ratesList.add(conversion.getRate());
+                }
+            }
+        }
+
+        return ratesList;
+    }
+
     public static void main(String[] args) {
         ApiConnector apiConnector = new ApiConnector();
         ApiResponse apiResponse = apiConnector.getcuurencyFromApi("DZD");
+
+        String[] tab = {"USD", "EUR", "BGN"};
+        List<Double> ratesList = getRatesForElements(apiResponse, tab);
+        for (double rate : ratesList) {
+            System.out.println("Rate : " + rate);
+        }
 
         if (apiResponse != null) {
             System.out.println(apiResponse.getResult().getConversion().get(1).getRate());
@@ -67,4 +88,6 @@ public class ApiConnector {
             System.out.println("Erreur lors de la récupération des données depuis l'API.");
         }
     }
+
+
 }

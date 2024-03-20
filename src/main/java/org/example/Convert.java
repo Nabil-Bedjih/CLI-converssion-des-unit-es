@@ -2,6 +2,7 @@ package org.example;
 
 import com.gestionfichier.InputFile;
 import com.gestionfichier.OutputFile;
+import fonction.ConvDevise;
 import fonction.ConvTemperature;
 import fonction.ConvertisseurDistance;
 import fonction.VitesseConv;
@@ -33,6 +34,9 @@ public class Convert implements Runnable{
     @CommandLine.Option(names = {"-tu", "--temperature"}, required = false, description = "temperature unit\n")
     private String tunit;
 
+    @CommandLine.Option(names = {"-cu", "--currency"}, required = false, description = "currency unit\n")
+    private String cunit;
+
     @CommandLine.Option(names = {"-v", "--value"}, required = false, description = "Value to convert\n")
     private String value;
     @CommandLine.Option(names = {"-f", "--file"},required = false, description = "Text file containing the input data\n")
@@ -40,8 +44,6 @@ public class Convert implements Runnable{
 
     @CommandLine.Option(names = {"-ou", "--outunit"}, required = false, description = "Output unit\n")
     private String listOfUnit;
-    @CommandLine.Option(names = {"-of", "--outputunifFile"}, required = false, description = "Output unit file\n\n")
-    private File otputUnitFile;
 
 
     public void run() {
@@ -90,6 +92,24 @@ public class Convert implements Runnable{
                     OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
 
                     values = VitesseConv.convert(vunit,Main.parseArg(listOfUnit),list);
+                    OutputFile.writeValuesToCSV("outputfile.csv", values);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+
+        if (cunit != null){
+            if (value != null){
+            } else if (inputFile != null) {
+                try {
+                    List<List<Double>> values = new ArrayList<>();
+                    List<Double> list = new ArrayList<>();
+                    list = InputFile.getValueFromURL(String.valueOf(getClass().getResource("/test.txt")));
+                    OutputFile.createOutputFile("outputfile.csv",Main.parseArg(listOfUnit));
+
+                    values = ConvDevise.convertirDevise(cunit,Main.parseArg(listOfUnit),list);
                     OutputFile.writeValuesToCSV("outputfile.csv", values);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

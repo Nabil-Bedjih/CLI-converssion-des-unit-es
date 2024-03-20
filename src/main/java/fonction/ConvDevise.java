@@ -16,7 +16,7 @@ public class ConvDevise {
 
         List<List<Double>> resultats = new ArrayList<>();
 
-        if (apiResponse != null && apiResponse.getStatus().equals("success")) {
+        if (apiResponse != null && apiResponse.getStatus().equals("OK")) {
             Result result = apiResponse.getResult();
             if (result != null) {
                 for (String deviseDestination : devisesDestinations) {
